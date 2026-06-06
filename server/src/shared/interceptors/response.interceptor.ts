@@ -10,7 +10,7 @@ import { Observable, map } from 'rxjs';
 import { Response } from 'express';
 import { ApiResponseDto, PaginationMeta } from '../response/api-response.dto';
 import { RESPONSE_MESSAGE_KEY } from '../decorators/response-message.decorator';
-import { FindAllUsersResult } from '../../application/use-cases/find-all-users.use-case';
+import { FindAllUsersResult } from '@/application/user/use-cases/find-all-users.use-case';
 
 function isPaginatedResult(data: unknown): data is FindAllUsersResult {
   return (

@@ -15,9 +15,9 @@ import { FindAllUsersUseCase } from '../../application/use-cases/find-all-users.
 import { FindUserByIdUseCase } from '../../application/use-cases/find-user-by-id.use-case';
 import { UpdateUserUseCase } from '../../application/use-cases/update-user.use-case';
 import { DeleteUserUseCase } from '../../application/use-cases/delete-user.use-case';
-import { CreateUserDto } from '../../application/dtos/create-user.dto';
-import { UpdateUserDto } from '../../application/dtos/update-user.dto';
-import { QueryUserDto } from '../../application/dtos/query-user.dto';
+import { CreateUserDto } from '../../application/user/dtos/create-user.dto';
+import { UpdateUserDto } from '../../application/user/dtos/update-user.dto';
+import { QueryUserDto } from '../../application/user/dtos/query-user.dto';
 import { ResponseMessage } from '../../shared/decorators/response-message.decorator';
 
 @Controller('users')

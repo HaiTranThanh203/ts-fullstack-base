@@ -10,14 +10,29 @@ import {
   UserAlreadyExistsException,
   UserDeletedException,
 } from '../../domain/exceptions/user.exception';
+import {
+  InvalidCredentialsException,
+  InvalidRefreshTokenException,
+  UnauthorizedException,
+} from '../../domain/exceptions/auth.exception';
 import { ApiResponseDto } from '../response/api-response.dto';
 
-@Catch(UserNotFoundException, UserAlreadyExistsException, UserDeletedException)
+@Catch(
+  UserNotFoundException,
+  UserAlreadyExistsException,
+  UserDeletedException,
+  InvalidCredentialsException,
+  InvalidRefreshTokenException,
+  UnauthorizedException,
+)
 export class DomainExceptionFilter implements ExceptionFilter {
   private readonly statusMap = new Map<string, HttpStatus>([
     ['UserNotFoundException', HttpStatus.NOT_FOUND],
     ['UserAlreadyExistsException', HttpStatus.CONFLICT],
     ['UserDeletedException', HttpStatus.GONE],
+    ['InvalidCredentialsException', HttpStatus.UNAUTHORIZED],
+    ['InvalidRefreshTokenException', HttpStatus.UNAUTHORIZED],
+    ['UnauthorizedException', HttpStatus.UNAUTHORIZED],
   ]);
 
   catch(exception: Error, host: ArgumentsHost) {

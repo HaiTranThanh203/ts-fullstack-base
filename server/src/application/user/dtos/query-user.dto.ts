@@ -1,6 +1,6 @@
 import { IsEnum, IsInt, IsOptional, Max, Min } from 'class-validator';
 import { Type } from 'class-transformer';
-import { UserRole } from '../../domain/entities/user.entity';
+import { UserRole } from '../../../domain/entities/user.entity';
 
 export class QueryUserDto {
   @IsInt()
