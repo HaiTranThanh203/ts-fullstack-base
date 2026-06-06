@@ -8,10 +8,12 @@ import { DeleteUserUseCase } from './user/use-cases/delete-user.use-case';
 import { LogoutUseCase } from './auth/use-cases/logout.use-case';
 import { RefreshTokenUseCase } from './auth/use-cases/refresh-token.use-case';
 import { LoginUseCase } from './auth/use-cases/login.use-case';
+import { FindAllUsersUseCase } from './user/use-cases/find-all-users.use-case';
 
 
-const USE_CASES = [
+const USER_USE_CASES  = [
   CreateUserUseCase,
+  FindAllUsersUseCase,
   FindUserByIdUseCase,
   UpdateUserUseCase,
   DeleteUserUseCase,
@@ -25,7 +27,7 @@ const AUTH_USE_CASES = [LoginUseCase, RefreshTokenUseCase, LogoutUseCase];
      JwtModule.register({}),
   
   ],
-  providers: [...USE_CASES],
-  exports: [...USE_CASES],
+   providers: [...USER_USE_CASES, ...AUTH_USE_CASES],
+  exports: [...USER_USE_CASES, ...AUTH_USE_CASES, JwtModule],
 })
 export class ApplicationModule {}

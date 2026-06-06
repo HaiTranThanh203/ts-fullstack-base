@@ -1,11 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-import {
- type IUserRepository,
-  USER_REPOSITORY,
-} from '../../domain/repositories/user.repository.interface';
-import { UserNotFoundException } from '../../domain/exceptions/user.exception';
+
 import { UserResponseDto } from '../dtos/user-response.dto';
 import { UserMapper } from '../mappers/user.mapper';
+import { type IUserRepository, USER_REPOSITORY } from '@/domain/repositories/user.repository.interface';
+import { UserNotFoundException } from '@/domain/exceptions/user.exception';
 
 @Injectable()
 export class FindUserByIdUseCase {

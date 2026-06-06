@@ -1,14 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import {
- type IUserRepository,
-  USER_REPOSITORY,
-} from '../../domain/repositories/user.repository.interface';
-import { UserAlreadyExistsException } from '../../domain/exceptions/user.exception';
+
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { UserResponseDto } from '../dtos/user-response.dto';
 import { UserMapper } from '../mappers/user.mapper';
-import { UserRole } from '../../domain/entities/user.entity';
+import { type IUserRepository, USER_REPOSITORY } from '@/domain/repositories/user.repository.interface';
+import { UserAlreadyExistsException } from '@/domain/exceptions/user.exception';
+import { UserRole } from '@/domain/entities/user.entity';
+
 
 @Injectable()
 export class CreateUserUseCase {

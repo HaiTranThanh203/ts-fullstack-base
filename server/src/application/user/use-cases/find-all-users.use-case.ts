@@ -1,11 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-import {
- type IUserRepository,
-  USER_REPOSITORY,
-} from '../../domain/repositories/user.repository.interface';
+
 import { QueryUserDto } from '../dtos/query-user.dto';
 import { UserResponseDto } from '../dtos/user-response.dto';
 import { UserMapper } from '../mappers/user.mapper';
+import { type IUserRepository, USER_REPOSITORY } from '@/domain/repositories/user.repository.interface';
 
 export interface FindAllUsersResult {
   data: UserResponseDto[];

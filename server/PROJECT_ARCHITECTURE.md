@@ -522,6 +522,7 @@ src/application/product/
 
 **Checklist:**
 - [ ] Tất cả field required trong DTO dùng `!`
+- [ ] Tất cả field trong DTO dùng `@ApiProperty`
 - [ ] DTO dùng `class-validator` decorators (`@IsString()`, `@IsNotEmpty()`...)
 - [ ] Response DTO **không** expose field nhạy cảm (password, token...)
 - [ ] Mỗi use-case chỉ làm **một việc duy nhất**
@@ -585,6 +586,7 @@ src/presentation/controllers/product.controller.ts
 
 **Checklist:**
 - [ ] Controller chỉ gọi use-case — **không** có business logic, không gọi repository trực tiếp
+- [ ] Mỗi Controller có `@ApiTags('...'), @ApiOperation,@ApiSuccessResponse`
 - [ ] Mỗi endpoint có `@ResponseMessage('...')`
 - [ ] `POST` có `@HttpCode(HttpStatus.CREATED)`
 - [ ] `DELETE` có `@HttpCode(HttpStatus.NO_CONTENT)`
@@ -901,3 +903,6 @@ npm run docker:reset
 - [ ] Biến môi trường mới được khai báo trong `env.validation.ts`
 - [ ] Biến môi trường mới được thêm vào `.env.example`
 - [ ] Dùng `getOrThrow()` thay vì `get()` khi đọc config
+
+### Documents Swagger 
+ - Khi thêm domain mới, chỉ cần thêm `@ApiProperty` vào DTOs và `@ApiOperation` + `@ApiSuccessResponse` vào controller — Swagger tự cập nhật, không cần config thêm gì.
