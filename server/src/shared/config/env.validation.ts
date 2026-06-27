@@ -20,7 +20,7 @@ class EnvironmentVariables {
   @IsInt()
   @IsOptional()
   @Min(1)
-  PORT?: number = 3000;
+  PORT?: number = 8080;
 
   @IsString()
   @IsNotEmpty()
