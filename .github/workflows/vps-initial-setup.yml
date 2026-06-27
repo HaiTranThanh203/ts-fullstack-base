@@ -1,0 +1,78 @@
+name: VPS Initial Setup
+
+on:
+  workflow_dispatch:
+
+jobs:
+  vps-setup:
+    name: Setup Nginx + Deploy Frontend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup VPS via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          timeout: 10m
+          script: |
+            set -e
+
+            echo "=== Step 1: Check current Nginx config ==="
+            cat /etc/nginx/sites-available/thanhhaidev.me 2>/dev/null || echo "FILE_NOT_FOUND"
+
+            echo "=== Step 2: Write new Nginx config ==="
+            cat > /etc/nginx/sites-available/thanhhaidev.me << 'NGINXEOF'
+            server {
+                listen 80;
+                listen [::]:80;
+                server_name thanhhaidev.me www.thanhhaidev.me;
+
+                access_log /var/log/nginx/thanhhaidev.me.access.log;
+                error_log  /var/log/nginx/thanhhaidev.me.error.log;
+
+                # Backend API — prefix /api/
+                location /api/ {
+                    proxy_pass http://localhost:3000;
+                    proxy_set_header Host              $host;
+                    proxy_set_header X-Real-IP         $remote_addr;
+                    proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+                    proxy_set_header X-Forwarded-Proto $scheme;
+                }
+
+                # Frontend — all other routes
+                location / {
+                    proxy_pass http://localhost:3001;
+                    proxy_set_header Host              $host;
+                    proxy_set_header X-Real-IP         $remote_addr;
+                    proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+                    proxy_set_header X-Forwarded-Proto $scheme;
+                }
+            }
+            NGINXEOF
+
+            echo "=== Step 3: Test and reload Nginx ==="
+            nginx -t && systemctl reload nginx
+            echo "Nginx reloaded OK"
+
+            echo "=== Step 4: Clone/pull repo for frontend ==="
+            mkdir -p /app/nextjs-frontend
+            if [ -d "/app/nextjs-frontend/.git" ]; then
+              echo "Repo exists, pulling..."
+              cd /app/nextjs-frontend && git pull origin main
+            else
+              echo "Cloning repo fresh..."
+              git clone https://github.com/HaiTranThanh203/ts-fullstack-base.git /app/nextjs-frontend
+            fi
+
+            echo "=== Step 5: Build and start frontend ==="
+            cd /app/nextjs-frontend/client
+            docker-compose up -d --build
+
+            echo "=== Step 6: Verify ==="
+            sleep 10
+            echo "Docker containers:"
+            docker ps --filter name=nextjs-frontend
+            echo "Frontend health check:"
+            curl -s -o /dev/null -w "HTTP %{http_code}" http://localhost:3001 || echo "FAILED"
+            echo "=== VPS Setup Complete ==="
