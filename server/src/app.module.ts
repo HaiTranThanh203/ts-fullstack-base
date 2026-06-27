@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PresentationModule } from './presentation/presentation.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import { validate } from './shared/config/env.validation';
 
 @Module({
@@ -24,5 +26,7 @@ import { validate } from './shared/config/env.validation';
 
     PresentationModule,
   ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
