@@ -1,33 +1,56 @@
-# 📋 MASTER TODO — Khởi tạo Next.js Frontend
-- Started: 2026-06-27 13:56 UTC+7
-- Completed: 2026-06-27 14:00 UTC+7
+# 📋 MASTER TODO — Frontend Deploy + Split CI/CD
+- Started: 2026-06-27 14:03 UTC+7
+- Agent: Cursor AI
 
-## TASK 0 — Khởi tạo project
-- [x] 0.1 Chạy create-next-app trong folder client/ ✅
-- [x] 0.2 Verify cấu trúc folder ✅
+---
 
-## TASK 1 — Cấu hình production
-- [x] 1.1 Thêm output: standalone vào next.config.ts ✅
-- [x] 1.2 Tạo .env.production và .env.local ✅
-- [x] 1.3 Kiểm tra .gitignore ✅ (đã có đủ .env*, .next/)
+## TASK 0 — Setup workspace
+- [x] 0.1 Tạo folder .cursor-workspace và các subfolder ✅ (tồn tại từ session trước)
+- [x] 0.2 Tạo MASTER_TODO.md này ✅
 
-## TASK 2 — Viết trang cơ bản
-- [x] 2.1 Sửa app/page.tsx (status page + API check) ✅
-- [x] 2.2 Sửa app/layout.tsx (metadata) ✅
+## TASK 1 — Cập nhật NestJS Backend
+- [ ] 1.1 Thêm global prefix /api vào main.ts + CORS
+- [ ] 1.2 Commit và push → CI/CD tự deploy lại backend
+- [ ] 1.3 Verify: curl https://thanhhaidev.me/api/
 
-## TASK 3 — Build test
-- [x] 3.1 npm run dev → xem UI local ✅ (dev server OK)
-- [x] 3.2 npm run build → verify standalone output ✅ (.next/standalone/ tồn tại)
+## TASK 2 — Tách CI/CD thành 2 pipeline
+- [ ] 2.1 Tạo .github/workflows/deploy-backend.yml
+- [ ] 2.2 Tạo .github/workflows/deploy-frontend.yml
+- [ ] 2.3 Xóa .github/workflows/deploy.yml cũ
+- [ ] 2.4 Commit và push
+- [ ] 2.5 Verify: chỉ đúng pipeline trigger khi thay đổi đúng folder
 
-## TASK 4 — Commit
-- [x] 4.1 git status kiểm tra files ✅
-- [x] 4.2 git add + commit + push ✅ (27 files, commit 0548988)
+## TASK 3 — Chuẩn bị Next.js cho Docker
+- [x] 3.1 Thêm output: 'standalone' vào next.config.ts ✅ (session trước)
+- [x] 3.2 Tạo client/.env.production ✅ (session trước)
+- [ ] 3.3 Tạo client/Dockerfile
+- [ ] 3.4 Tạo client/.dockerignore
+- [ ] 3.5 Tạo client/docker-compose.yml
+
+## TASK 4 — Cập nhật Nginx trên VPS
+- [ ] 4.1 SSH vào VPS
+- [ ] 4.2 Sửa /etc/nginx/sites-available/thanhhaidev.me
+- [ ] 4.3 nginx -t && systemctl reload nginx
+- [ ] 4.4 Verify nginx config
+
+## TASK 5 — Deploy Frontend lần đầu (thủ công)
+- [ ] 5.1 SSH vào VPS, clone/pull repo
+- [ ] 5.2 docker-compose up -d --build
+- [ ] 5.3 Verify: curl http://localhost:3001
+
+## TASK 6 — Smoke test toàn bộ
+- [ ] 6.1 curl https://thanhhaidev.me/ → Next.js response
+- [ ] 6.2 curl https://thanhhaidev.me/api/ → NestJS response
+- [ ] 6.3 Kiểm tra docker ps trên VPS (2 container chạy)
+- [ ] 6.4 Kiểm tra Nginx logs
 
 ## FINAL SUMMARY
 | Task | Status | Notes |
 |------|--------|-------|
-| Task 0 — Khởi tạo | ✅ | Next.js 16.2.9, React 19, Tailwind v4 |
-| Task 1 — Config | ✅ | standalone output, .env.production + .env.local |
-| Task 2 — UI cơ bản | ✅ | Status page với API check |
-| Task 3 — Build test | ✅ | Build thành công, .next/standalone/ OK |
-| Task 4 — Commit | ✅ | 27 files, pushed lên origin/main |
+| Task 0 — Workspace setup | ✅ | Dirs tồn tại từ session trước |
+| Task 1 — NestJS /api prefix | 🔄 | |
+| Task 2 — Split CI/CD | ⏳ | |
+| Task 3 — Next.js Docker | 🔄 | Standalone + env done, cần Docker files |
+| Task 4 — Nginx update | ⏳ | |
+| Task 5 — Frontend deploy | ⏳ | |
+| Task 6 — Smoke test | ⏳ | |

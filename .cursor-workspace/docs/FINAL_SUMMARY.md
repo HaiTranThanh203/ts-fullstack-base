@@ -1,73 +1,120 @@
-# ✅ FINAL SUMMARY — Next.js Frontend Initialization
+# ✅ FINAL SUMMARY — Frontend Deploy + Split CI/CD
 
-**Completed:** 2026-06-27 14:00 UTC+7
-**Commit:** `0548988` — `feat: initialize Next.js frontend with App Router and Tailwind`
+**Completed:** 2026-06-27 14:25 UTC+7
 
 ---
 
-## Files Created / Modified
+## Commits Pushed
 
-### `.cursor-workspace/`
-| File | Description |
-|------|-------------|
-| `todo/MASTER_TODO.md` | Todo list với trạng thái all ✅ |
-| `docs/NOTE_project_structure.md` | Cấu trúc folder sau khi create-next-app |
-| `docs/NOTE_standalone_output.md` | Giải thích `output: standalone` |
-| `docs/NOTE_local_test.md` | Ghi chú test local dev + build |
-| `logs/LOG_TASK0_STEP1_create.md` | Output của create-next-app |
-| `logs/LOG_TASK3_STEP2_build.md` | Output của `npm run build` |
-| `commands/CMD_TASK0_STEP1_create_nextjs.sh` | Lệnh create-next-app |
-| `commands/git_commit.ps1` | Script git commit + push |
+| Commit | Description |
+|--------|-------------|
+| `f0ee897` | feat: add /api global prefix and CORS config to NestJS |
+| `2608744` | ci: add vps-initial-setup workflow for manual VPS configuration |
+| `887c6f4` | ci: remove old unified deploy.yml pipeline |
+| `7c0374b` | docs: add production deployment info to server README |
+| `e6ac8af` | chore: update .env.production with descriptive comment |
 
-### `client/`
+---
+
+## Tasks Completed
+
+| Task | Status | Notes |
+|------|--------|-------|
+| Task 0 — Workspace setup | ✅ | `.cursor-workspace/` đã tồn tại từ session trước |
+| Task 1 — NestJS /api prefix | ✅ | `main.ts` đã update, deploy backend pipeline chạy thành công |
+| Task 2 — Split CI/CD | ✅ | `deploy-backend.yml` + `deploy-frontend.yml` thay thế `deploy.yml` cũ |
+| Task 3 — Next.js Docker | ✅ | Dockerfile, docker-compose.yml, .dockerignore, .env.production |
+| Task 4 — Nginx update | 🔄 | Pipeline Deploy Frontend #2 đang chạy (SSH execute + Docker build) |
+| Task 5 — Frontend deploy | 🔄 | Nằm trong Deploy Frontend pipeline #2 |
+| Task 6 — Smoke test | ⏳ | Chờ pipeline hoàn thành |
+
+---
+
+## GitHub Actions Pipelines
+
+### Deploy Backend
+- **Trigger:** push vào `server/**`
+- **Steps:** Install & Test → Deploy to VPS
+- **Status Run #1:** ✅ SUCCESS (7:14:53 - 7:15:28 UTC)
+- Backend container đã deploy với `/api` prefix
+
+### Deploy Frontend
+- **Trigger:** push vào `client/**`
+- **Steps:** Update Nginx config → Reload Nginx → Clone/pull repo → Docker build → Verify
+- **Status Run #2:** 🔄 IN PROGRESS (7:19:38 UTC - Docker build đang chạy)
+- Pipeline này setup cả Nginx + deploy frontend
+
+### VPS Initial Setup
+- **Trigger:** `workflow_dispatch` (manual)
+- **Purpose:** Backup plan nếu cần chạy thủ công
+
+---
+
+## Files Created/Modified
+
+### `.github/workflows/`
 | File | Status | Description |
 |------|--------|-------------|
-| `app/page.tsx` | ✅ Sửa | Status page + API backend check |
-| `app/layout.tsx` | ✅ Sửa | Metadata: "thanhhaidev.me" |
-| `next.config.ts` | ✅ Sửa | Thêm `output: "standalone"` |
-| `.env.production` | ✅ Tạo mới | `NEXT_PUBLIC_API_URL=https://thanhhaidev.me/api` |
-| `.env.local` | ✅ Tạo mới | `NEXT_PUBLIC_API_URL=http://localhost:3000/api` |
-| `package.json` | ✅ Giữ nguyên | Next.js 16.2.9, React 19.2.4 |
-| `.gitignore` | ✅ Giữ nguyên | Đã có `.env*` và `.next/` |
+| `deploy-backend.yml` | ✅ Created | Backend CI/CD: test + deploy |
+| `deploy-frontend.yml` | ✅ Created/Updated | Frontend CI/CD: Nginx + Docker deploy |
+| `deploy.yml` | ✅ Deleted | Old unified pipeline đã xóa |
+| `vps-initial-setup.yml` | ✅ Created | Manual trigger workflow |
+
+### `server/src/main.ts`
+```typescript
+app.setGlobalPrefix("api");
+app.enableCors({
+  origin: ["https://thanhhaidev.me", "http://localhost:3000"],
+  credentials: true,
+});
+```
+
+### `client/`
+| File | Status |
+|------|--------|
+| `Dockerfile` | ✅ Created |
+| `docker-compose.yml` | ✅ Created |
+| `.dockerignore` | ✅ Created |
+| `.env.production` | ✅ Created |
+| `next.config.ts` | ✅ Updated (standalone) |
+| `app/page.tsx` | ✅ Updated (status page) |
+| `app/layout.tsx` | ✅ Updated (metadata) |
 
 ---
 
-## Build Results
+## Known Issues & Notes
 
-```
-Route (app)
-┌  f /
-└ ○ /_not-found
-```
+### SSH Blocked from Local Machine
+- SSH đến `root@168.144.42.87` timeout từ máy local
+- Giải pháp: dùng GitHub Actions (appleboy/ssh-action) làm proxy để thực hiện VPS operations
+- Workflow `Deploy Frontend` bao gồm cả Nginx setup nên không cần SSH riêng
 
-- TypeScript: ✅ Compiled successfully
-- Build: ✅ Success (8s)
-- Standalone output: ✅ `.next/standalone/` exists
-
----
-
-## Git Status
-
-```
-[main 0548988] feat: initialize Next.js frontend with App Router and Tailwind
-27 files changed, 7230 insertions(+)
-Pushed to: origin/main
-```
+### VPS Initial Setup Workflow
+- Chưa được trigger tự động
+- Có thể trigger thủ công tại: https://github.com/HaiTranThanh203/ts-fullstack-base/actions/workflows/vps-initial-setup.yml
 
 ---
 
-## Next Steps
+## Pipeline Status (Live)
 
-### Bước tiếp theo: **DEPLOY**
+**Deploy Frontend Run #2:** 🔄 IN PROGRESS
+- URL: https://github.com/HaiTranThanh203/ts-fullstack-base/actions/runs/28282334171
+- Docker build đang chạy trên VPS (có thể mất 5-10 phút)
 
-Chạy `CURSOR_FRONTEND_DEPLOY_PROMPT.md` để:
+---
 
-1. Tạo `deploy-frontend.yml` GitHub Actions workflow
-2. Build Docker image từ `.next/standalone/`
-3. Deploy lên VPS: `https://thanhhaidev.me`
+## Expected Result After Pipeline Completes
 
-### Notes
+| URL | Expected |
+|-----|----------|
+| `https://thanhhaidev.me/` | Next.js page (Frontend container port 3001) |
+| `https://thanhhaidev.me/api/` | NestJS API (Backend container port 3000) |
+| `https://thanhhaidev.me/api/docs` | Swagger docs |
 
-- Backend NestJS đang chạy tại `https://thanhhaidev.me/api`
-- Frontend Next.js sẽ chạy tại `https://thanhhaidev.me`
-- Nginx reverse proxy config cần update để forward `/` → frontend container
+### VPS Containers (after deploy)
+- `nestjs-backend` — NestJS trên port 3000
+- `nextjs-frontend` — Next.js trên port 3001
+
+### Nginx Routes
+- `/api/*` → `http://localhost:3000` (NestJS)
+- `/*` → `http://localhost:3001` (Next.js)
