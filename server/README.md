@@ -59,6 +59,12 @@ $ npm run test:cov
 
 
 
+## Production Deployment
+
+API runs at: `https://thanhhaidev.me/api/`
+Swagger docs: `https://thanhhaidev.me/api/docs`
+Default port: `3000`
+
 ## Architecture
 
 
