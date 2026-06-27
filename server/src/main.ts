@@ -27,36 +27,39 @@ async function bootstrap() {
     }),
   );
 
+  app.setGlobalPrefix("api");
+  app.enableCors({
+    origin: ["https://thanhhaidev.me", "http://localhost:3000"],
+    credentials: true,
+  });
+
   // ─── Swagger ───────────────────────────────────────────────
   const config = new DocumentBuilder()
-    .setTitle('My App API')
-    .setDescription('API documentation')
-    .setVersion('1.0')
+    .setTitle("My App API")
+    .setDescription("API documentation")
+    .setVersion("1.0")
     .addBearerAuth(
       {
-        type: 'http',
-        scheme: 'bearer',
-        bearerFormat: 'JWT',
-        description: 'Nhập access token vào đây',
+        type: "http",
+        scheme: "bearer",
+        bearerFormat: "JWT",
+        description: "Nhập access token vào đây",
       },
-      'access-token', // tên key — dùng trong @ApiBearerAuth('access-token')
+      "access-token", // tên key — dùng trong @ApiBearerAuth('access-token')
     )
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api/docs', app, document, {
+  SwaggerModule.setup("api/docs", app, document, {
     swaggerOptions: {
       persistAuthorization: true, // giữ token sau khi F5
     },
   });
   // ──────────────────────────────────────────────────────────
 
-
- 
   const configService = app.get(ConfigService);
 
-
-  const port = configService.get<number>('PORT') || 8080;
+  const port = configService.get<number>("PORT") || 3000;
 
   // 3. Truyền port vào hàm listen
   await app.listen(port);
