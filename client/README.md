@@ -1,5 +1,10 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Production Deployment
+
+Production URL: https://thanhhaidev.me
+API: https://thanhhaidev.me/api
+
 ## Getting Started
 
 First, run the development server:
