@@ -10,6 +10,11 @@ import { validate } from './shared/config/env.validation';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: [
+        `.env.${process.env.NODE_ENV || 'development'}`,
+        '.env',
+        '.env.example',
+      ],
       validate,
     }),
 

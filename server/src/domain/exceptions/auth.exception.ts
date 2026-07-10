@@ -18,3 +18,31 @@ export class UnauthorizedException extends Error {
     this.name = 'UnauthorizedException';
   }
 }
+
+export class PasswordResetTokenExpiredException extends Error {
+  constructor() {
+    super('Password reset token has expired');
+    this.name = 'PasswordResetTokenExpiredException';
+  }
+}
+
+export class InvalidPasswordResetTokenException extends Error {
+  constructor() {
+    super('Invalid password reset token');
+    this.name = 'InvalidPasswordResetTokenException';
+  }
+}
+
+export class InvalidCurrentPasswordException extends Error {
+  constructor() {
+    super('Current password is incorrect');
+    this.name = 'InvalidCurrentPasswordException';
+  }
+}
+
+export class SamePasswordException extends Error {
+  constructor() {
+    super('New password must be different from current password');
+    this.name = 'SamePasswordException';
+  }
+}
