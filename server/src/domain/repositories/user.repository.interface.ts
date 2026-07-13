@@ -12,6 +12,7 @@ export interface IUserRepository {
   findAll(options?: FindAllOptions): Promise<{ data: User[]; total: number }>;
   create(user: Omit<User, 'id' | 'createdAt' | 'updatedAt' | 'deletedAt' | 'isDeleted' | 'isAdmin' | 'update' | 'softDelete'>): Promise<User>;
   update(id: string, data: Partial<Pick<User, 'name' | 'email'>>): Promise<User | null>;
+  updatePassword(id: string, passwordHash: string): Promise<void>;
   softDelete(id: string): Promise<void>;
   existsByEmail(email: string): Promise<boolean>;
 }

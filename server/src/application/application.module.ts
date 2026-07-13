@@ -9,6 +9,10 @@ import { LogoutUseCase } from './auth/use-cases/logout.use-case';
 import { RefreshTokenUseCase } from './auth/use-cases/refresh-token.use-case';
 import { LoginUseCase } from './auth/use-cases/login.use-case';
 import { FindAllUsersUseCase } from './user/use-cases/find-all-users.use-case';
+import { RegisterUseCase } from './auth/use-cases/register.use-case';
+import { ForgotPasswordUseCase } from './auth/use-cases/forgot-password.use-case';
+import { ResetPasswordUseCase } from './auth/use-cases/reset-password.use-case';
+import { ChangePasswordUseCase } from './auth/use-cases/change-password.use-case';
 
 
 const USER_USE_CASES  = [
@@ -19,7 +23,15 @@ const USER_USE_CASES  = [
   DeleteUserUseCase,
 ];
 
-const AUTH_USE_CASES = [LoginUseCase, RefreshTokenUseCase, LogoutUseCase];
+const AUTH_USE_CASES = [
+  LoginUseCase,
+  RefreshTokenUseCase,
+  LogoutUseCase,
+  RegisterUseCase,
+  ForgotPasswordUseCase,
+  ResetPasswordUseCase,
+  ChangePasswordUseCase,
+];
 
 @Module({
   imports: [

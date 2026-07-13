@@ -127,4 +127,15 @@ export class UserRepositoryImpl implements IUserRepository {
       )
       .exec();
   }
+
+  async updatePassword(id: string, passwordHash: string): Promise<void> {
+    if (!Types.ObjectId.isValid(id)) return;
+
+    await this.userModel
+      .findOneAndUpdate(
+        { _id: id, deletedAt: null },
+        { $set: { passwordHash } },
+      )
+      .exec();
+  }
 }

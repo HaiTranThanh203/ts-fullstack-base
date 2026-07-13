@@ -27,6 +27,8 @@ npm-debug.log*
 
 # Cursor
 .cursor-workspace/
+.cursor/
+**/.cursor/
 
 # OS
 .DS_Store

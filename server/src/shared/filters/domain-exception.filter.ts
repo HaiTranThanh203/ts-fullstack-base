@@ -14,6 +14,10 @@ import {
   InvalidCredentialsException,
   InvalidRefreshTokenException,
   UnauthorizedException,
+  PasswordResetTokenExpiredException,
+  InvalidPasswordResetTokenException,
+  InvalidCurrentPasswordException,
+  SamePasswordException,
 } from '../../domain/exceptions/auth.exception';
 import { ApiResponseDto } from '../response/api-response.dto';
 
@@ -24,6 +28,10 @@ import { ApiResponseDto } from '../response/api-response.dto';
   InvalidCredentialsException,
   InvalidRefreshTokenException,
   UnauthorizedException,
+  PasswordResetTokenExpiredException,
+  InvalidPasswordResetTokenException,
+  InvalidCurrentPasswordException,
+  SamePasswordException,
 )
 export class DomainExceptionFilter implements ExceptionFilter {
   private readonly statusMap = new Map<string, HttpStatus>([
@@ -33,6 +41,10 @@ export class DomainExceptionFilter implements ExceptionFilter {
     ['InvalidCredentialsException', HttpStatus.UNAUTHORIZED],
     ['InvalidRefreshTokenException', HttpStatus.UNAUTHORIZED],
     ['UnauthorizedException', HttpStatus.UNAUTHORIZED],
+    ['PasswordResetTokenExpiredException', HttpStatus.BAD_REQUEST],
+    ['InvalidPasswordResetTokenException', HttpStatus.BAD_REQUEST],
+    ['InvalidCurrentPasswordException', HttpStatus.BAD_REQUEST],
+    ['SamePasswordException', HttpStatus.BAD_REQUEST],
   ]);
 
   catch(exception: Error, host: ArgumentsHost) {

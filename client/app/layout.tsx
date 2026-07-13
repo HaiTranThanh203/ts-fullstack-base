@@ -1,12 +1,9 @@
-import type { Metadata } from "next";
-import { Geist } from "next/font/google";
-import "./globals.css";
-
-const geist = Geist({ subsets: ["latin"] });
+import type { Metadata } from 'next';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "thanhhaidev.me",
-  description: "NestJS + Next.js fullstack app",
+  title: 'GymPro',
+  description: 'Gym management application',
 };
 
 export default function RootLayout({
@@ -15,8 +12,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="vi">
-      <body className={geist.className}>{children}</body>
+    <html lang="en">
+      <body className="antialiased">{children}</body>
     </html>
   );
 }

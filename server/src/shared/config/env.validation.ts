@@ -37,6 +37,34 @@ class EnvironmentVariables {
   @IsString()
   @IsNotEmpty()
   JWT_REFRESH_EXPIRES!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  MAIL_HOST!: string;
+
+  @IsInt()
+  @IsNotEmpty()
+  MAIL_PORT!: number;
+
+  @IsString()
+  @IsOptional()
+  MAIL_USER?: string;
+
+  @IsString()
+  @IsOptional()
+  MAIL_PASSWORD?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  MAIL_FROM!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  PASSWORD_RESET_TOKEN_EXPIRES!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  FRONTEND_URL!: string;
 }
 
 export function validate(config: Record<string, unknown>) {
